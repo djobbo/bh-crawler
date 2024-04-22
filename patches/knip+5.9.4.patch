@@ -1,0 +1,79 @@
+diff --git a/node_modules/knip/dist/plugins/bun/index.d.ts b/node_modules/knip/dist/plugins/bun/index.d.ts
+new file mode 100644
+index 0000000..38d4d1a
+--- /dev/null
++++ b/node_modules/knip/dist/plugins/bun/index.d.ts
+@@ -0,0 +1,12 @@
++import type { IsPluginEnabled, ResolveConfig } from '#p/types/plugins.js';
++import type { PluginConfig } from './types.js';
++declare const _default: {
++    title: string;
++    enablers: import("#p/types/config.js").IgnorePatterns;
++    isEnabled: IsPluginEnabled;
++    config: string[];
++    entry: string[];
++    production: string[];
++    resolveConfig: ResolveConfig<PluginConfig>;
++};
++export default _default;
+diff --git a/node_modules/knip/dist/plugins/bun/index.js b/node_modules/knip/dist/plugins/bun/index.js
+new file mode 100644
+index 0000000..f9e51b1
+--- /dev/null
++++ b/node_modules/knip/dist/plugins/bun/index.js
+@@ -0,0 +1,20 @@
++import { hasDependency } from '#p/util/plugin.js';
++const title = 'Bun';
++const enablers = ['@types/bun'];
++const isEnabled = ({ dependencies }) => hasDependency(dependencies, enablers) || !!globalThis.Bun;
++const config = [];
++const entry = ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'];
++const production = [];
++const resolveConfig = async (config) => {
++    const dependencies = config?.plugins ?? [];
++    return [...dependencies];
++};
++export default {
++    title,
++    enablers,
++    isEnabled,
++    config,
++    entry,
++    production,
++    resolveConfig,
++};
+diff --git a/node_modules/knip/dist/plugins/bun/types.d.ts b/node_modules/knip/dist/plugins/bun/types.d.ts
+new file mode 100644
+index 0000000..13d719f
+--- /dev/null
++++ b/node_modules/knip/dist/plugins/bun/types.d.ts
+@@ -0,0 +1,4 @@
++export type PluginConfig = {
++    plugins?: string[];
++    entryPathsOrPatterns?: string[];
++};
+diff --git a/node_modules/knip/dist/plugins/bun/types.js b/node_modules/knip/dist/plugins/bun/types.js
+new file mode 100644
+index 0000000..cb0ff5c
+--- /dev/null
++++ b/node_modules/knip/dist/plugins/bun/types.js
+@@ -0,0 +1 @@
++export {};
+diff --git a/node_modules/knip/dist/plugins/index.d.ts b/node_modules/knip/dist/plugins/index.d.ts
+index 2fd5d12..145224d 100644
+--- a/node_modules/knip/dist/plugins/index.d.ts
++++ b/node_modules/knip/dist/plugins/index.d.ts
+@@ -56,3 +56,4 @@ export { default as wireit } from './wireit/index.js';
+ export { default as wrangler } from './wrangler/index.js';
+ export { default as yorkie } from './yorkie/index.js';
+ export { default as moonrepo } from './moonrepo/index.js';
++export { default as bun } from './bun/index.js';
+diff --git a/node_modules/knip/dist/plugins/index.js b/node_modules/knip/dist/plugins/index.js
+index 2fd5d12..145224d 100644
+--- a/node_modules/knip/dist/plugins/index.js
++++ b/node_modules/knip/dist/plugins/index.js
+@@ -56,3 +56,4 @@ export { default as wireit } from './wireit/index.js';
+ export { default as wrangler } from './wrangler/index.js';
+ export { default as yorkie } from './yorkie/index.js';
+ export { default as moonrepo } from './moonrepo/index.js';
++export { default as bun } from './bun/index.js';

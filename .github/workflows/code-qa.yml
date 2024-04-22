@@ -1,0 +1,27 @@
+name: Code QA
+on: [push]
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            action: bun check:lint
+          - name: Typecheck
+            action: bun check:types
+          - name: Deadcode
+            action: bun check:deadcode
+          - name: Test
+            action: bun test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: ${{ matrix.name }}
+        run: |
+          bun install --frozen-lockfile
+          ${{ matrix.action }}

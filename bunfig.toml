@@ -1,0 +1,3 @@
+# Necessary until Bun supports patching packages
+[install.lockfile]
+print = "yarn"

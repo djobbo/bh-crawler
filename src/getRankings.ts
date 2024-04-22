@@ -12,8 +12,8 @@ export enum Bracket {
 
 export enum Region {
   US_East = "us-e",
-  US_West = "us-w",
   Europe = "eu",
+  US_West = "us-w",
 }
 
 export class RankingsContext extends Context.Tag("RankingsContext")<
